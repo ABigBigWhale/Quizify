@@ -5,7 +5,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Moments</title>
+        <title>Quizify</title>
 
         <!-- Firebase -->
         <script src="https://www.gstatic.com/firebasejs/3.4.0/firebase.js"></script>
@@ -14,6 +14,11 @@
         <script src="https://code.jquery.com/jquery.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.css" />
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('select').material_select();
+            });
+        </script>
 
         <!-- ReactJS -->
         <script src="https://unpkg.com/react@15/dist/react.js"></script>
@@ -22,6 +27,7 @@
         <!-- fonts, icons -->
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
         <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css?family=Shrikhand" rel="stylesheet">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
         <!-- leaflet libraries -->
@@ -36,48 +42,34 @@
     <body>
         <div class="header-container">
             <nav class="header nav-wrapper">
-                <div class="left container-profile">
-                    <div class="photo-container user-photo-container">
-                        <img class="profile-photo" id="user-photo"/>
-                    </div>
-                    <div id="container-user-name">
-                        <p class="user-name" id="user-name"></p>
-                        <span class="clickable" id="log-out">Sign out</span>
-                    </div>
-                </div>
-
-                <p class="right corner-header hide-on-med-and-down">Moments</p>
-
-                <ul class="view-select-list">
+<!--
+                <ul class="left view-select-list">
                     <li class="view-select active" id="view-newest-select">
-                        <a class="clickable" id="view-newest"><i class="material-icons">query_builder</i></a>
+                        <a class="clickable" id="view-newest"><i class="material-icons">whatshot</i></a>
                     </li>
                     <li class="view-select" id="view-hottest-select">
                         <a class="clickable" id="view-hottest"><i class="material-icons">whatshot</i></a>
                     </li>
                 </ul>
+-->
+
+                <p class="center title">Quizify</p>
+
             </nav>
-
         </div>
 
-        <div class="container" id="moments-container">
-        </div>
-
-        <div id="new-moment-container">
-            <div class="card input-card">
-                <form id="form-new-moment">
-                    <div class="card-content">
-
-                        <div class="input-field col s12">
-                            <textarea id="new-moment" type="text" class="materialize-textarea"></textarea>
-                            <label for="new-moment">Write about a new moment</label>
-                        </div>
-                    </div>
-                    <div class="card-action">
-                        <span class="clickable" id="submit-new-moment">Send!</span>
-                    </div>
-                </form>
+        <div class="container main-container">
+            <div class="input-field col s12">
+                <select name="genre">
+                    <option value="" disabled selected>Choose the genre</option>
+                    <option value="pop">Pop</option>
+                    <option value="viral">Viral</option>
+                    <option value="rock">Rock</option>
+                </select>
             </div>
+            <form class="center" id="search-form">
+                <input type="submit" id="search" class="btn btn-primary" value="Start!" />
+            </form>
         </div>
 
     </body>

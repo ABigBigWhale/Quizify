@@ -1,0 +1,20 @@
+body {
+    background-color: #121314;
+    color: #FFFFFF; /*#58595C*/
+}
+
+.header {
+    background-color: #1C1C1F;
+    color: #84BD00;
+    vertical-align: middle;
+}
+
+.title {
+    font-family: 'Shrikhand', cursive;
+    font-size: 2rem;
+    margin: 0 1rem 0 0;
+}
+
+.btn {
+    background-color: #84BD00;
+}
