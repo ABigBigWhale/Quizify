@@ -15,6 +15,74 @@ body {
     margin: 0 1rem 0 0;
 }
 
+.search {
+    text-align: center;
+}
+
 .btn {
     background-color: #84BD00;
+    width: 33%;
+    height: 3rem;
+    margin-top: 2rem;
+}
+
+.container-search {
+    margin: 4rem auto;
+    margin-top: 45%;
+    width: 100%;
+    padding: 4rem 2rem;
+    background-color: #1C1C1F;
+}
+
+.container-search.activated {
+    margin-top: 4rem;
+    transition: margin-top 1.5s ease-out;
+}
+
+.playlist-card {
+    color: #121314;
+    max-height: 200px;
+}
+
+.playlist-card img {
+    min-width: 80px;
+    max-width: 300px;
+    height: 120px;
+}
+
+.playlist-card .card-content {
+    overflow: auto;
+    height: 60px;
+}
+
+.playlist-card .card-action {
+    height: 40px;
+}
+
+.playlist-card .card-action .card-link {
+    color: #84BD00 !important;
+}
+
+.playlist-card .card-content, .playlist-card .card-action {
+    padding: 10px 15px;
+}
+
+.fade-in-appear {
+    opacity: 0.01;
+}
+
+.fade-in-appear.fade-in-appear-active {
+    opacity: 1;
+    transition: opacity .5s ease-in;
+}
+
+.slide-in-appear {
+    opacity: 0.01;
+    margin-top: 100%;
+}
+
+.slide-in-appear.slide-in-appear-active {
+    opacity: 1;
+    margin-top: 0;
+    transition: all .5s ease-out;
 }

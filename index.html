@@ -14,15 +14,11 @@
         <script src="https://code.jquery.com/jquery.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.css" />
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.js"></script>
-        <script>
-            $(document).ready(function() {
-                $('select').material_select();
-            });
-        </script>
 
         <!-- ReactJS -->
-        <script src="https://unpkg.com/react@15/dist/react.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react-with-addons.js"></script>
         <script src="https://unpkg.com/react-dom@15/dist/react-dom.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.18.2/babel.min.js"></script>
 
         <!-- fonts, icons -->
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
@@ -35,42 +31,31 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css" />
 
         <!-- Custom files -->
-        <script type="text/javascript" src="js/main.jsx"></script>
+        <script type="text/jsx" src="js/main.jsx"></script>
         <link rel="stylesheet" href="css/main.css" />
     </head>
 
     <body>
         <div class="header-container">
             <nav class="header nav-wrapper">
-<!--
-                <ul class="left view-select-list">
-                    <li class="view-select active" id="view-newest-select">
-                        <a class="clickable" id="view-newest"><i class="material-icons">whatshot</i></a>
-                    </li>
-                    <li class="view-select" id="view-hottest-select">
-                        <a class="clickable" id="view-hottest"><i class="material-icons">whatshot</i></a>
-                    </li>
-                </ul>
+                <!--
+<ul class="left view-select-list">
+<li class="view-select active" id="view-newest-select">
+<a class="clickable" id="view-newest"><i class="material-icons">whatshot</i></a>
+</li>
+<li class="view-select" id="view-hottest-select">
+<a class="clickable" id="view-hottest"><i class="material-icons">whatshot</i></a>
+</li>
+</ul>
 -->
 
                 <p class="center title">Quizify</p>
-
             </nav>
         </div>
 
-        <div class="container main-container">
-            <div class="input-field col s12">
-                <select name="genre">
-                    <option value="" disabled selected>Choose the genre</option>
-                    <option value="pop">Pop</option>
-                    <option value="viral">Viral</option>
-                    <option value="rock">Rock</option>
-                </select>
-            </div>
-            <form class="center" id="search-form">
-                <input type="submit" id="search" class="btn btn-primary" value="Start!" />
-            </form>
-        </div>
+        <div class="container main-container" id="content"></div>
+        
+        <div class="container" id="results"></div>
 
     </body>
 
