@@ -51,18 +51,31 @@ body {
 }
 
 .playlist-card .card-content {
-    overflow: auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
     height: 60px;
+}
+
+.playlist-card .card-content p {
+    text-overflow: ellipsis;
 }
 
 .playlist-card .card-content-hover {
     position: absolute;
     width: 100%;
     height: 100%;
+    padding: 10px 15px;
     background-color: #1C1C1F;
     color: white;
     z-index: 10;
     overflow: auto;
+    cursor: pointer;
+    transition: opacity 0.25s;
+}
+
+.playlist-card .card-content-hover p {
+    margin-top: 0;
+    margin-bottom: 4px;
 }
 
 .playlist-card .card-action {
@@ -75,6 +88,29 @@ body {
 
 .playlist-card .card-content, .playlist-card .card-action {
     padding: 10px 15px;
+}
+
+.bulb {
+    height: 24px;
+    transition: all 0.5s;
+}
+
+.bulb.g {
+    border: 3px solid #84BD00;
+    background-color: rgba(132, 189, 0, 0.5);
+    box-shadow: 0 0 7px #84BD00;
+}
+
+.bulb.r {
+    border: 3px solid #ef5350;
+    background-color: rgba(239, 83, 80, 0.5);
+    box-shadow: 0 0 5px #ef5350;
+}
+
+.bulb.n {
+    opacity: 0.6;
+    border: 3px solid #bdbdbd;
+    background-color: rgba(189, 189, 189, 0.5);
 }
 
 .fade-in-appear {

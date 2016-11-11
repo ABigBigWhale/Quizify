@@ -2,20 +2,24 @@ class Card extends React.Component {
     constructor(props) {
         super(props);
         this.state = {showContent: false}
-        
+
         this.handleClick = this.handleClick.bind(this);
         this.handleMouseEnter = this.handleMouseEnter.bind(this);
         this.handleMouseLeave = this.handleMouseLeave.bind(this);
     }
-    
+
     handleClick() {
-        console.log('id: ' + this.props.snapshotId);
+        if (!Spotify.auth.accessToken) Spotify.auth.login();
+        
+        Spotify.client.get(this.props.url, (response) => {
+            console.log(response);
+        });
     }
-    
+
     handleMouseEnter() {
         this.setState({showContent: true});
     }
-    
+
     handleMouseLeave() {
         this.setState({showContent: false});
     }
@@ -36,16 +40,23 @@ class Card extends React.Component {
                         </div>
                         <div className="card-stacked"
                             onMouseEnter={this.handleMouseEnter}
-                                    onMouseLeave={this.handleMouseLeave}>
-                            
-                            {this.state.showContent ? <HoverContent /> : null}
-                            
-                            <div className="card-content">
-                                <p>{this.props.text}</p>
+                            onMouseLeave={this.handleMouseLeave}>
+
+                            <div ref='hoverContent' 
+                                className="card-content-hover"
+                                style={{opacity: this.state.showContent ? 1 : 0}}
+                                onClick={this.handleClick}>
+
+                                <p><b>{this.props.name}</b></p>
+                                <p>Owner: <i>{this.props.owner}</i></p>
+                                <p><i className="material-icons">playlist_play</i>×{this.props.cnt}</p>
                             </div>
-                            
-                            
-                            
+
+                            <div className="card-content">
+                                <p>{this.props.name}</p>
+                            </div>
+
+
                             <div className="card-action">
                                 <a className='card-link' href="#" onClick={this.handleClick}>Start</a>
                             </div>
@@ -54,25 +65,5 @@ class Card extends React.Component {
                 </div>
             </TransitionGroup>
         );
-    }
-}
-
-class HoverContent extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-    
-    render() {
-        return (
-            <TransitionGroup
-                transitionName="fade-in"
-                transitionAppear={true}
-                transitionAppearTimeout={500}
-                transitionEnterTimeout={500}
-                transitionLeaveTimeout={300}>
-
-                <div ref='hoverContent' className="card-content-hover"></div>
-            </TransitionGroup>
-            );
     }
 }
