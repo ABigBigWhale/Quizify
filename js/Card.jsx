@@ -9,11 +9,20 @@ class Card extends React.Component {
     }
 
     handleClick() {
-        if (!Spotify.auth.accessToken) Spotify.auth.login();
-        
-        Spotify.client.get(this.props.url, (response) => {
-            console.log(response);
-        });
+        if (!Spotify.auth.accessToken) {
+            Spotify.auth.login(() => {
+                Spotify.client.get(this.props.url, (response) => {
+                    ReactDOM.render(<Game playlist={response} />, 
+                                    document.querySelector('#results'));
+                });
+            });
+        } else {
+            Spotify.client.get(this.props.url, (response) => {
+                console.log(response);
+                ReactDOM.render(<Game playlist={response} />, 
+                                document.querySelector('#results'));
+            });
+        }
     }
 
     handleMouseEnter() {
