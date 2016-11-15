@@ -6,7 +6,7 @@ Spotify.addr = 'https://api.spotify.com/v1/';
 Spotify.auth = {
     clientId: "c0dce3be8fcf44bca854a6407965ba8c",
     clientSecret: "0b5e934ca37a40dabcaf33987a3cde69",
-    redirectUrl: "http://127.0.0.1:8080/index.html",
+    redirectUrl: "http://students.washington.edu/liuh25/info343/a5-spotify/",
     accessToken: "",
     login(callback) {
         var url = 'https://accounts.spotify.com/authorize?client_id=' + Spotify.auth.clientId +
