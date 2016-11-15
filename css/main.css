@@ -118,18 +118,37 @@ body {
 }
 
 .song-cover-img {
+    content: url("../img/question-mark.png");
     display: block;
     width: 200px;
     margin: 0 auto;
+    cursor: pointer;
+}
+
+.song-cover-img:hover {
+    content: url("../img/play.png");
+    filter: drop-shadow(0px 0px 10px #84BD00);
+    transition: all .3s;
 }
 
 .quiz-option {
     cursor: pointer;
+    user-select: none;
 }
 
 .quiz-option:hover {
     box-shadow: 0px 0px 15px 5px #84BD00;
     transition: box-shadow .3s;
+}
+
+.quiz-option.correct {
+    border: 5px solid #84BD00;
+    transition: border .5s;
+}
+
+.quiz-option.wrong {
+    border: 5px solid #ef5350;
+    transition: border .5s;
 }
 
 .fade-in-appear {

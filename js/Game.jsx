@@ -8,12 +8,16 @@ class Game extends React.Component {
             trackUrl: "",
             optionList: [],
             answerIndex: 0,
+            titleText: "What's the song?",
+            displayOptions: true,
+            ongoingClick: false
         }
 
         console.log("construct: ");
         console.log(this.state);
 
         this.handleOptionClick = this.handleOptionClick.bind(this);
+        this.generateLevel = this.generateLevel.bind(this);
     }
 
     componentWillMount() {
@@ -21,65 +25,83 @@ class Game extends React.Component {
 
         var trackList = this.state.trackList.slice();
         trackList.forEach((track, i) => {
-            if (track.track.preview_url == null) {
+            if (track.track == null 
+                || track.track.preview_url == null 
+                || !track.track.preview_url) {
+
                 trackList.splice(i, 1);
             }
-            console.log(track.track.preview_url);
         });
 
         this.setState({trackList: trackList});
-        console.log(this.state);
-
         this.generateLevel();
     }
 
     generateLevel() {
-        console.log("gen level: ");
-        var answerIndex = Math.floor(Math.random() * 4);
-        console.log("ans: " + answerIndex);
+        if (this.state.progress.length < 12) {
 
-        var trackList = this.state.trackList.slice();
-        var candidates = this.randomSubarray(trackList.slice(), 4);
+            var answerIndex = Math.floor(Math.random() * 4);
+            var trackList = this.state.trackList.slice();
+            var candidates = this.randomSubarray(trackList.slice(), 4);
 
-        // Remove the answer track from the pool
-        trackList.splice(
-            trackList.indexOf(candidates[answerIndex]), 1
-        );
+            // Remove the answer track from the pool
+            trackList.splice(
+                trackList.indexOf(candidates[answerIndex]), 1
+            );
 
-        var optionList = [];
-        candidates.forEach((trackObj, i) => {
-            optionList.push({
-                name: trackObj.track.name, 
-                artist: trackObj.track.artists[0].name
+            var optionList = [];
+            candidates.forEach((trackObj, i) => {
+                optionList.push({
+                    name: trackObj.track.name, 
+                    artist: trackObj.track.artists[0].name
+                });
             });
-        });
 
-        this.setState({
-            trackList: trackList,
-            optionList: optionList,
-            answerIndex: answerIndex,
-            trackUrl: candidates[answerIndex].track.preview_url,
-        });
+            if (!candidates[answerIndex].track.preview_url) {
+                this.generateLevel();
+            } else {
+                this.setState({
+                    trackList: trackList,
+                    optionList: optionList,
+                    answerIndex: answerIndex,
+                    trackUrl: candidates[answerIndex].track.preview_url,
+                    ongoingClick: false,
+                });
+            }
+            console.log(this.state.trackUrl);
+            console.log(this.state);
 
+        } else {
+            this.setState({
+                titleText: "Quiz complete. Your grade: " + (
+                    ((this.state.progress.match(/g/g) || []).length / 3.0).toFixed(1)
+                ) + "/4.0",
+                displayOptions: false,
+            });
+        }
     }
 
     handleOptionClick(event) {
-        console.log("click: " + event.currentTarget.id + "\tans: " + this.state.answerIndex);
-        console.log(event.currentTarget);
+        if (this.state.ongoingClick) return;
+        
+        this.setState({ongoingClick: true});
+        event.stopPropagation();
         event.preventDefault();
         
+        event.currentTarget.setAttribute;
+        this.panel.revealAnswer(this.state.answerIndex, this.generateLevel);
+
         var selected = event.currentTarget.id;
         selected = selected.replace("quiz-option-", "");
         var selectIndex = parseInt(selected);
         var currProgress = this.state.progress;
-        
+
         if (selectIndex == this.state.answerIndex) {
-            this.setState({progress: currProgress + 'g'}, this.generateLevel);
+            this.setState({progress: currProgress + 'g'});
         } else {
-            this.setState({progress: currProgress + 'r'}, this.generateLevel);
+            this.setState({progress: currProgress + 'r'});
         }
-        
-        
+
     }
 
     randomSubarray(arr, size) {
@@ -94,14 +116,16 @@ class Game extends React.Component {
     }
 
     render() {
-        console.log(this.state.optionList);
         return (
             <div className="game-panel">
                 <SongCover
                     imgUrl="img/question-mark.png"
                     trackUrl={this.state.trackUrl} />
                 <QuizOptionPanel 
+                    text={this.state.titleText}
+                    ref={q => {this.panel = q}}
                     list={this.state.optionList}
+                    options={this.state.displayOptions}
                     clickHandler={this.handleOptionClick} />
                 <ProgressRibbon progress={this.state.progress}/>
             </div>
@@ -134,24 +158,54 @@ class QuizOptionPanel extends React.Component {
         super(props);
     }
 
+    revealAnswer(answerIndex, callback) {
+        for (var i = 0; i < 4; i++) {
+            $('#quiz-option-' + i).off("click");
+            if (i == answerIndex) {
+                $('#quiz-option-' + i).addClass('correct');
+            } else {
+                $('#quiz-option-' + i).addClass('wrong');
+            }
+        }
+
+        setTimeout(function() {
+            for (var i = 0; i < 4; i++) {
+                if (i == answerIndex) {
+                    $('#quiz-option-' + i).removeClass('correct');
+                } else {
+                    $('#quiz-option-' + i).removeClass('wrong');
+                }
+            }
+
+            callback();
+
+        }, 1000)
+    }
+
     render() {
-        console.log("Option panel");
-        console.log(this.props);
-        return (
-            <div>
-                <h2 className="quiz-title">What's this song?</h2>
-                <div className="row quiz-panel">
-                    {this.props.list.map(
-                        (value, id) => 
-                        <QuizOption 
-                            key={id}
-                            quizId={id} 
-                            trackAttr={value}
-                            clickHandler={this.props.clickHandler}/>
-                    )}
+        if (this.props.options) {
+            return (
+                <div>
+                    <h2 className="quiz-title">{this.props.text}</h2>
+                    <div className="row quiz-panel">
+                        {this.props.list.map(
+                            (value, id) => 
+                            <QuizOption 
+                                key={id}
+                                quizId={id} 
+                                trackAttr={value}
+                                clickHandler={this.props.clickHandler}/>
+                        )}
+                    </div>
                 </div>
-            </div>
-        );
+            );
+        } else {
+            return (
+                <div>
+                    <h2 className="quiz-title">{this.props.text}</h2>
+                </div>
+            );
+        }
     }
 }
 
@@ -188,7 +242,6 @@ class ProgressRibbon extends React.Component {
         while (list.length < 12) {
             list.push('n');
         }
-        console.log(list.length + list);
 
         return (
             <div className='row'>
