@@ -2,8 +2,7 @@
 ## INFO 343, Assignment 5
 
 ### What is the purpose of your project (i.e., why would someone use this app)?
-The project is a song-name-guessing minigame. People can use it to explore Spotift's rich playlists and test their 
-music knowledge while having a bit of fun.
+The project is a song-name-guessing minigame. People can use it to explore Spotift's rich playlists and test their music knowledge while having a bit of fun.
 
 ### What is the URL of this project on your student web-server?
 http://students.washington.edu/liuh25/info343/a5-spotify/
